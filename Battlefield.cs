@@ -38,15 +38,14 @@ namespace ProjectOne
 
         public bool HitChance()
         {
-            Random rand = new Random();
-            return rand.Next(0, 10) > 5 ? true : false;
+            return RandomNumber(11) > 0 ? true : false;
         }
         public bool BattleIsActive()
         {
             bool checkHerd = herd.HasSurvivors();
             bool checkFleet = fleet.HasSurvivors();
 
-            if(checkHerd == false || checkFleet == false)
+            if (checkHerd == false || checkFleet == false)
             {
                 return false;
             }
@@ -55,15 +54,10 @@ namespace ProjectOne
                 return true;
             }
         }
-        public void ConcludeBattle()
-        {
-
-        }
-
         public (Dinosaur, Robot) GetMatchup(Herd herd, Fleet fleet)
         {
-            int dinoIndex = RandomNumber(0, herd.dinosaurs.Count);
-            int roboIndex = RandomNumber(0, fleet.robots.Count);    
+            int dinoIndex = RandomNumber(herd.dinosaurs.Count);
+            int roboIndex = RandomNumber(fleet.robots.Count);    
 
             Dinosaur dinosaur = null;
             Robot robot = null;
@@ -75,19 +69,19 @@ namespace ProjectOne
                 }
                 else
                 {
-                    dinoIndex  = RandomNumber(0, herd.dinosaurs.Count); ;
+                    dinoIndex  = RandomNumber(herd.dinosaurs.Count); ;
                 }
             }
 
             while (robot == null)
             {
-                if (fleet.robots[dinoIndex].IsAlive() == true)
+                if (fleet.robots[roboIndex].IsAlive() == true)
                 {
                     robot = fleet.robots[roboIndex];
                 }
                 else
                 {
-                    roboIndex = RandomNumber(0, fleet.robots.Count); ;
+                    roboIndex = RandomNumber(fleet.robots.Count); ;
                 }
             }
             return (dinosaur, robot);
@@ -105,19 +99,20 @@ namespace ProjectOne
                 Console.WriteLine(robo.DisplayStatus());
             }
         }
-        public int RandomNumber(int start, int end)
+        public int RandomNumber(int range)
         {
-            return rand.Next(start, end);
+            return rand.Next(range);
         }
-        public void DisplayWinner()
+        public void DisplayWinner(Herd herd, Fleet fleet)
         {
-
+            if (herd.HasSurvivors() == true)
+            {
+                Console.WriteLine("Winner winner chicken dinner!!!\nTeam Dinosaur is victorious!!!");
+            }
+            else
+            {
+                Console.WriteLine("Winner winner chicken dinner!!!\nTeam Robot is victorious!!!");
+            }
         }
-        public void DetermineWinner()
-        {
-
-        }
-      
-
     }
 }

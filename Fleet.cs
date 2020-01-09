@@ -28,6 +28,10 @@ namespace ProjectOne
             }
             return alive;
         }
+        public void RemoveRobot(Robot robot)
+        {
+            robots.Remove(robot);
+        }
 
 
 

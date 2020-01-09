@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,16 +15,15 @@ namespace ProjectOne
 
         public void init()
         {
-           
-            Robot robo1 = new Robot("Calvin", 1000, 150, new Weapon("Pistol",75));
-            Robot robo2 = new Robot("Steve", 1000, 200, new Weapon("Slingshot", 10));
-            Robot robo3 = new Robot("Chris", 1000, 200, new Weapon("MK2 Carbine",150));
+            Robot robo1 = new Robot("Calvin", 1200, 150, new Weapon("Pistol",75));
+            Robot robo2 = new Robot("Steve", 1200, 200, new Weapon("Slingshot", 50));
+            Robot robo3 = new Robot("Chris", 1200, 200, new Weapon("MK2 Carbine",150));
 
             robots = new Fleet(new List<Robot>{ robo1, robo2, robo3});
 
-            Dinosaur dino1 = new Dinosaur("Trex", 1000, 400, 200);
-            Dinosaur dino2 = new Dinosaur("Brontosaurus", 600, 250, 100);
-            Dinosaur dino3 = new Dinosaur("Spinosaurus", 700, 400, 250);
+            Dinosaur dino1 = new Dinosaur("Trex", 900, 250, 100);
+            Dinosaur dino2 = new Dinosaur("Brontosaurus", 1200, 150, 50);
+            Dinosaur dino3 = new Dinosaur("Spinosaurus", 700, 350, 125);
 
             dinosaurs = new Herd(new List<Dinosaur> { dino1, dino2, dino3 });
 
@@ -35,13 +35,16 @@ namespace ProjectOne
             init();
 
             while(battlefield.BattleIsActive() == true)
+            
             {
                 SimulateBattle();
-                battlefield.DisplayStats(dinosaurs,robots);
-                Console.ReadLine();
+                Console.WriteLine();
+                //Thread.Sleep(250);
             }
 
-            battlefield.DisplayWinner();
+            battlefield.DisplayWinner(dinosaurs,robots);
+            Console.WriteLine();
+            battlefield.DisplayStats(dinosaurs, robots);
             Console.ReadLine();
         }
 
@@ -51,38 +54,51 @@ namespace ProjectOne
             (Dinosaur, Robot) matchup = battlefield.GetMatchup(dinosaurs,robots);
 
             int turn;
-            turn = battlefield.RandomNumber(0,2);
+            turn = battlefield.RandomNumber(2);
 
             bool successfulAttack;
+            bool hitchance = battlefield.HitChance();
 
             //0 ---> dinosaur attacks robot
             //1 ---> robot attacks dinosaur
-            if(turn == 0)
+
+
+            if(hitchance == true)
             {
-                successfulAttack = matchup.Item1.Attack(matchup.Item2);
-                if(successfulAttack == true)
+                if (turn == 0)
                 {
-                    Console.WriteLine($"{matchup.Item1.type} hit {matchup.Item2.name} for {matchup.Item1.attackPower} points of damage!");
-                    Console.WriteLine($"{matchup.Item2.name} now has {matchup.Item2.Health()} health points left!");
+                    successfulAttack = matchup.Item1.Attack(matchup.Item2);
+                    if (successfulAttack == true)
+                    {
+                        Console.WriteLine($"{matchup.Item1.type} hit {matchup.Item2.name} for {matchup.Item1.attackPower} points of damage!");
+                        Console.WriteLine($"{matchup.Item2.name} now has {matchup.Item2.Health()} health points left!");
+                    }
+                    
                 }
                 else
                 {
-                    //TODO Attack missed
+                    successfulAttack = matchup.Item2.Attack(matchup.Item1);
+                    if (successfulAttack == true)
+                    {
+                        Console.WriteLine($"{matchup.Item2.name} hit {matchup.Item1.type} for {matchup.Item2.weapon.Damage()} points of damage!");
+                        Console.WriteLine($"{matchup.Item1.type} now has {matchup.Item1.Health()} health points left!");
+                    }                  
                 }
             }
             else
             {
-                successfulAttack = matchup.Item2.Attack(matchup.Item1);
-                if (successfulAttack == true)
+                if(turn == 0)
                 {
-                    Console.WriteLine($"{matchup.Item2.name} hit {matchup.Item1.type} for {matchup.Item2.weapon.Damage()} points of damage!");
-                    Console.WriteLine($"{matchup.Item1.type} now has {matchup.Item1.Health()} health points left!");
+                    Console.WriteLine($"{matchup.Item1.type} missed {matchup.Item2.name}!!!");
                 }
                 else
                 {
-                    //TODO attack missed
+                    Console.WriteLine($"{matchup.Item2.name} missed {matchup.Item1.type}!!!");
+
                 }
             }
+
+           
         }
 
     }

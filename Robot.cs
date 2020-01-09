@@ -49,6 +49,10 @@ namespace ProjectOne
             else
             {
                 health -= damage;
+                if(health == 0)
+                {
+                    Console.WriteLine($"{name} has died!!!");
+                }
             }
         }
         public double Health()

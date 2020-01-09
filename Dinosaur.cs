@@ -51,6 +51,10 @@ namespace ProjectOne
             else
             {
                 health -= damage;
+                if (health == 0)
+                {
+                    Console.WriteLine($"{type} has died!!!");
+                }
             }
         }
         public bool IsAlive()
@@ -68,6 +72,7 @@ namespace ProjectOne
         {
             return string.Format("Type: {0}, Health: {1}, Energy: {2}, Attack Power: {3}", type, health, energy, attackPower);
         }
+
 
 
     }
