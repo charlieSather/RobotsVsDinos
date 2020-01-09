@@ -46,6 +46,7 @@ namespace ProjectOne
             if (health < damage)
             {
                 health = 0;
+                Console.WriteLine($"{type} has died!!!");
             }
             else
             {

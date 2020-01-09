@@ -15,15 +15,15 @@ namespace ProjectOne
         public void init()
         {
            
-            Robot robo1 = new Robot("Calvin", 3000, 500, new Weapon("Pistol",75));
-            Robot robo2 = new Robot("Steve", 5000, 2000, new Weapon("Slingshot", 10));
-            Robot robo3 = new Robot("Chris", 6000, 800, new Weapon("MK2 Carbine",150));
+            Robot robo1 = new Robot("Calvin", 1000, 150, new Weapon("Pistol",75));
+            Robot robo2 = new Robot("Steve", 1000, 200, new Weapon("Slingshot", 10));
+            Robot robo3 = new Robot("Chris", 1000, 200, new Weapon("MK2 Carbine",150));
 
             robots = new Fleet(new List<Robot>{ robo1, robo2, robo3});
 
-            Dinosaur dino1 = new Dinosaur("Trex", 10000, 400, 200);
-            Dinosaur dino2 = new Dinosaur("Brontosaurus", 10000, 400, 100);
-            Dinosaur dino3 = new Dinosaur("Spinosaurus", 8000, 500, 250);
+            Dinosaur dino1 = new Dinosaur("Trex", 1000, 400, 200);
+            Dinosaur dino2 = new Dinosaur("Brontosaurus", 600, 250, 100);
+            Dinosaur dino3 = new Dinosaur("Spinosaurus", 700, 400, 250);
 
             dinosaurs = new Herd(new List<Dinosaur> { dino1, dino2, dino3 });
 
@@ -75,7 +75,7 @@ namespace ProjectOne
                 successfulAttack = matchup.Item2.Attack(matchup.Item1);
                 if (successfulAttack == true)
                 {
-                    Console.WriteLine($"{matchup.Item2.name} hit {matchup.Item2.name} for {matchup.Item2.weapon.Damage()} points of damage!");
+                    Console.WriteLine($"{matchup.Item2.name} hit {matchup.Item1.type} for {matchup.Item2.weapon.Damage()} points of damage!");
                     Console.WriteLine($"{matchup.Item1.type} now has {matchup.Item1.Health()} health points left!");
                 }
                 else
