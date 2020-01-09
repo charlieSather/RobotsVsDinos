@@ -12,15 +12,15 @@ namespace ProjectOne
         double health;
         int energy;
         public double attackPower;
+        List<AttackType> attacks; 
 
-        //List<AttackType> attacks; 
-
-        public Dinosaur(string type, double health, int energy, double attackPower)
+        public Dinosaur(string type, double health, int energy, double attackPower, List<AttackType> attacks)
         {
             this.type = type;
             this.health = health;
             this.energy = energy;
             this.attackPower = attackPower;
+            this.attacks = attacks;
         }
         
         public bool Attack(Robot robot)
@@ -61,7 +61,13 @@ namespace ProjectOne
         {
             return health > 0 ? true : false;
         }
-
+        public void DisplayAttacks()
+        {
+            foreach(AttackType attack in attacks)
+            {
+                Console.WriteLine(attack);
+            }
+        }
 
         public double Health()
         {

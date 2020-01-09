@@ -11,6 +11,7 @@ namespace ProjectOne
     {
         Fleet robots;
         Herd dinosaurs;
+        List<AttackType> attacks;
         Battlefield battlefield;
 
         public void init()
@@ -21,13 +22,21 @@ namespace ProjectOne
 
             robots = new Fleet(new List<Robot>{ robo1, robo2, robo3});
 
-            Dinosaur dino1 = new Dinosaur("Trex", 900, 250, 100);
-            Dinosaur dino2 = new Dinosaur("Brontosaurus", 1200, 150, 50);
-            Dinosaur dino3 = new Dinosaur("Spinosaurus", 700, 350, 125);
+            Dinosaur dino1 = new Dinosaur("Trex", 900, 250, 100, attacks);
+            Dinosaur dino2 = new Dinosaur("Brontosaurus", 1200, 150, 50, attacks);
+            Dinosaur dino3 = new Dinosaur("Spinosaurus", 700, 350, 125, attacks);
 
             dinosaurs = new Herd(new List<Dinosaur> { dino1, dino2, dino3 });
 
             battlefield = new Battlefield(dinosaurs, robots);
+        }
+
+        public void initAttacks()
+        {
+            AttackType one = new AttackType("Tail Whip", 0.95, 0.8);
+            AttackType two = new AttackType("Swipe", 1.2, 1.2);
+            AttackType three = new AttackType("Stomp", 1.5, 2);
+            attacks = new List<AttackType>{ one, two, three };
         }
 
         public void Run()

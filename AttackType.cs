@@ -11,11 +11,13 @@ namespace ProjectOne
     {
         string name;
         double powerMultiplier;
+        double energyCost;
 
-        public AttackType(string name, double powerMultiplier)
+        public AttackType(string name, double powerMultiplier, double energyMultiplier)
         {
             this.name = name;
             this.powerMultiplier = powerMultiplier;
+            this.energyCost = energyCost;
         }
 
 
