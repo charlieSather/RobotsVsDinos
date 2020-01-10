@@ -10,11 +10,11 @@ namespace ProjectOne
     {
         public string type { get; private set; }
         double health;
-        int energy;
+        double energy;
         public double attackPower;
         List<AttackType> attacks; 
 
-        public Dinosaur(string type, double health, int energy, double attackPower, List<AttackType> attacks)
+        public Dinosaur(string type, double health, double energy, double attackPower, List<AttackType> attacks)
         {
             this.type = type;
             this.health = health;
@@ -23,18 +23,21 @@ namespace ProjectOne
             this.attacks = attacks;
         }
         
-        public bool Attack(Robot robot)
+        public bool Attack(Robot robot, AttackType attack)
         {
-            if(energy > 20)
+            double attackCost = 25;
+            attackCost *= attack.energyMultiplier;
+
+            if(energy > attackCost)
             {
-                robot.IncomingHit(attackPower);
-                energy -= 20;
+                robot.IncomingHit(attackPower * attack.attackMultiplier);
+                energy -= attackCost;
                 return true;
             }
             else
             {
-                Console.WriteLine($"{type} only has {energy} of energy which is not enough to attack!");
-                Console.WriteLine($"{type} restores 10 points of energy");
+                Console.WriteLine($"{type} only has {energy} points of energy which is not enough to attack!");
+                Console.WriteLine($"{type} restores 15 points of energy");
                 energy += 10;
                 return false;
 
@@ -63,11 +66,41 @@ namespace ProjectOne
         }
         public void DisplayAttacks()
         {
-            foreach(AttackType attack in attacks)
+            for(int i = 0; i < attacks.Count; i++)
             {
-                Console.WriteLine(attack);
+                Console.WriteLine($"{i}: {attacks[i].ToString()}");
             }
         }
+        public AttackType SelectAttack()
+        {
+            bool validInput = false;
+            int AttackIndex = 0;
+            while (validInput == false)
+            {
+                Console.WriteLine($"{type} please select an attack (enter number)");
+                DisplayAttacks();
+                try
+                {
+                    AttackIndex = int.Parse(Console.ReadLine());
+                    if (AttackIndex >= 0 && AttackIndex < attacks.Count)
+                    {
+                        validInput = true;
+                      //return attacks[AttackIndex];
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry invalid selection please try again");
+                    }
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine(ex.ToString());
+                }             
+
+            }
+            return attacks[AttackIndex];
+        }
+
 
         public double Health()
         {

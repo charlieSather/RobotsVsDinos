@@ -8,18 +8,18 @@ namespace ProjectOne
 {
     class WeaponList
     {
-        List<Weapon> weapons;
+        public List<Weapon> weapons { get; private set; }
 
         public WeaponList(List<Weapon> weapons)
         {
             this.weapons = weapons;
         }
-
+                
         public void DisplayWeapons()
         {
-            foreach(Weapon weapon in weapons)
+            for(int i = 0; i < weapons.Count; i++ )
             {
-                Console.WriteLine(weapon);
+                Console.WriteLine($"{i}: {weapons[i].ToString()}");
             }
         }
     }

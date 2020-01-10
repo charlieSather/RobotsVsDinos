@@ -8,23 +8,27 @@ namespace ProjectOne
 {
     class Weapon
     {
-        string type;
-        double attackPower;
+        public string type { get; private set; }
+        public double attackPower { get; private set; }
+        public double drainMultiplier { get; private set; }
 
-        public Weapon(string type, int attackPower)
+        public Weapon(string type, int attackPower, double drainMultiplier)
         {
             this.type = type;
             this.attackPower = attackPower;
+            this.drainMultiplier = drainMultiplier;
+        }
+        public Weapon()
+        {
+            type = "fists";
+            attackPower = 5;
+            drainMultiplier = 25;
         }
 
-        public double Damage()
+        override    
+        public string ToString()
         {
-            return attackPower;
-        }
-
-        public string Type()
-        {
-            return type;
+            return $"(Name: {type}, AttackPower: {attackPower}, PowerDrainMultiplier: {drainMultiplier}) Power Cost = {50 * drainMultiplier}";
         }
 
 

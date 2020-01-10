@@ -9,15 +9,22 @@ namespace ProjectOne
 {
     class AttackType
     {
-        string name;
-        double powerMultiplier;
-        double energyCost;
 
-        public AttackType(string name, double powerMultiplier, double energyMultiplier)
+        public string name { get; private set; }
+        public double attackMultiplier { get; private set; }
+        public double energyMultiplier { get; private set; }
+
+        public AttackType(string name, double attackMultiplier, double energyMultiplier)
         {
             this.name = name;
-            this.powerMultiplier = powerMultiplier;
-            this.energyCost = energyCost;
+            this.attackMultiplier = attackMultiplier;
+            this.energyMultiplier = energyMultiplier;
+        }
+
+        override
+        public string ToString()
+        {            
+            return $"(Name: {name}, AttackMultiplier: {attackMultiplier}, EnergyMultiplier: {energyMultiplier}) Energy Cost = {energyMultiplier * 20}";
         }
 
 

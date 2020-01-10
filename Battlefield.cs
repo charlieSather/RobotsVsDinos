@@ -17,24 +17,7 @@ namespace ProjectOne
         {
             this.herd = herd;
             this.fleet = fleet;
-        }
-
-        public void RobotAttack(Robot robot, Dinosaur dinosaur)
-        {
-            if(HitChance() == true)
-            {
-                robot.Attack(dinosaur);
-            }
-        }
-                  
-        public void DinosaurAttack(Dinosaur dinosaur, Robot robot)
-        {
-            if (HitChance() == true)
-            {
-                dinosaur.Attack(robot);
-            }
-
-        }
+        }     
 
         public bool HitChance()
         {
