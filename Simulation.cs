@@ -19,9 +19,9 @@ namespace ProjectOne
         {
             initWeapons();
 
-            Robot robo1 = new Robot("Calvin", 1200, 150, new Weapon());
-            Robot robo2 = new Robot("Steve", 1200, 200, new Weapon());
-            Robot robo3 = new Robot("Chris", 1200, 200, new Weapon());
+            Robot robo1 = new Robot("Calvin", 1200, 300, new Weapon());
+            Robot robo2 = new Robot("Steve", 1200, 375, new Weapon());
+            Robot robo3 = new Robot("Chris", 1200, 400, new Weapon());
 
             robots = new Fleet(new List<Robot>{ robo1, robo2, robo3});
 
@@ -34,9 +34,9 @@ namespace ProjectOne
 
             initAttacks();
 
-            Dinosaur dino1 = new Dinosaur("Trex", 900, 300, 85, attacks);
+            Dinosaur dino1 = new Dinosaur("Trex", 900, 275, 85, attacks);
             Dinosaur dino2 = new Dinosaur("Brontosaurus", 1200, 200, 55, attacks);
-            Dinosaur dino3 = new Dinosaur("Spinosaurus", 700, 350, 115, attacks);
+            Dinosaur dino3 = new Dinosaur("Spinosaurus", 725, 300, 115, attacks);
 
             dinosaurs = new Herd(new List<Dinosaur> { dino1, dino2, dino3 });
 
@@ -57,10 +57,10 @@ namespace ProjectOne
             Weapon weapon1 = new Weapon("Pistol", 65, 0.75);
             Weapon weapon2 = new Weapon("Crossbow", 50, 0.6);
             Weapon weapon3 = new Weapon("M4A4", 100, 1.25);
-            Weapon weapon4 = new Weapon("Slingshot", 25, 0.5);
+            Weapon weapon4 = new Weapon("Slingshot", 25, 0.25);
             Weapon weapon5 = new Weapon("Sniper Rifle", 150, 1.5);
             Weapon weapon6 = new Weapon("Rocket Launcher", 200, 2);
-            Weapon weapon7 = new Weapon("Rifle", 85, 0.9);
+            Weapon weapon7 = new Weapon("Rifle", 85, 1);
             Weapon weapon8 = new Weapon("Shotgun", 175, 1.75);
 
             weaponList = new WeaponList (new List<Weapon> { weapon1, weapon2, weapon3, weapon4, weapon5, weapon6, weapon7, weapon8 });
@@ -74,7 +74,7 @@ namespace ProjectOne
             while(battlefield.BattleIsActive() == true)
             
             {
-                SimulateBattle();
+                SimulateBattleRound();
                 Console.WriteLine();
                 //Thread.Sleep(250);
             }
@@ -86,24 +86,23 @@ namespace ProjectOne
         }
 
         //turns consist of random matchups of dino vs robot, and rng decides who attacks who in those matchups
-        public void SimulateBattle()
+        public void SimulateBattleRound()
         {
             (Dinosaur, Robot) matchup = battlefield.GetMatchup(dinosaurs,robots);
 
-            int turn;
-            turn = battlefield.RandomNumber(2);
+            //0 ---> dinosaur attacks robot
+            //1 ---> robot attacks dinosaur
+
+            int Attacker;
+            Attacker = battlefield.RandomNumber(2);
 
             bool successfulAttack;
             bool hitchance = battlefield.HitChance();
             AttackType attack;
 
-            //0 ---> dinosaur attacks robot
-            //1 ---> robot attacks dinosaur
-
-
             if(hitchance == true)
             {
-                if (turn == 0)
+                if (Attacker == 0)
                 {
                     Console.WriteLine(matchup.Item1.DisplayStatus());
                     //attack = matchup.Item1.SelectAttack();
@@ -130,7 +129,7 @@ namespace ProjectOne
             }
             else
             {
-                if(turn == 0)
+                if(Attacker == 0)
                 {
                     Console.WriteLine($"{matchup.Item1.type} missed {matchup.Item2.name}!!!");
                 }
