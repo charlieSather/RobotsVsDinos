@@ -20,7 +20,7 @@ namespace ProjectOne
             bool alive = false;
             foreach (Robot robo in robots)
             {
-                if (robo.Health() > 0)
+                if (robo.health > 0)
                 {
                     alive = true;
                     break;

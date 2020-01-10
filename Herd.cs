@@ -20,7 +20,7 @@ namespace ProjectOne
             bool alive = false;
             foreach (Dinosaur dino in dinosaurs)
             {
-                if (dino.Health() > 0)
+                if (dino.health > 0)
                 {
                     alive = true;
                     break;

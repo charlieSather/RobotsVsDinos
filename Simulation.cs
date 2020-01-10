@@ -104,13 +104,13 @@ namespace ProjectOne
                 if (turn == 0)
                 {
                     Console.WriteLine(matchup.Item1.DisplayStatus());
-                    attack = matchup.Item1.SelectAttack();
-                    //attack = AutomateRobotAttacks(matchup.Item1);
+                    //attack = matchup.Item1.SelectAttack();
+                    attack = AutomateRobotAttacks(matchup.Item1);
                     successfulAttack = matchup.Item1.Attack(matchup.Item2, attack);
                     if (successfulAttack == true)
                     {
                         Console.WriteLine($"{matchup.Item1.type} hit {matchup.Item2.name} for {matchup.Item1.attackPower * attack.attackMultiplier} points of damage!");
-                        Console.WriteLine($"{matchup.Item2.name} now has {matchup.Item2.Health()} health points left!");
+                        Console.WriteLine($"{matchup.Item2.name} now has {matchup.Item2.health} health points left!");
                     }
                     Console.WriteLine(matchup.Item1.DisplayStatus());
                 }
@@ -121,7 +121,7 @@ namespace ProjectOne
                     if (successfulAttack == true)
                     {
                         Console.WriteLine($"{matchup.Item2.name} hit {matchup.Item1.type} for {matchup.Item2.weapon.attackPower} points of damage!");
-                        Console.WriteLine($"{matchup.Item1.type} now has {matchup.Item1.Health()} health points left!");
+                        Console.WriteLine($"{matchup.Item1.type} now has {matchup.Item1.health} health points left!");
                     }
                     Console.WriteLine(matchup.Item2.DisplayStatus());
                 }
@@ -137,7 +137,9 @@ namespace ProjectOne
                     Console.WriteLine($"{matchup.Item2.name} missed {matchup.Item1.type}!!!");
 
                 }
-            }           
+            }
+
+            battlefield.HealRemainingCompetitors(dinosaurs, robots);
         }
         public AttackType AutomateRobotAttacks(Dinosaur dino)
         {

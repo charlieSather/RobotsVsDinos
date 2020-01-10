@@ -8,8 +8,8 @@ namespace ProjectOne
 {
     class Robot
     {
-        public string name;
-        double health;
+        public string name { get; private set; }
+        public double health { get; private set; }
         double powerLevel;
         public Weapon weapon;
 
@@ -91,15 +91,18 @@ namespace ProjectOne
                 }
             }
         }
-        public double Health()
+        public void RegenHealth()
         {
-            return health;
+            if (health > 0)
+            {
+                health += 2;
+            }
         }
         public bool IsAlive()
         {
             return health > 0 ? true : false;
         }
-
+        
         public string DisplayStatus()
         {
             return string.Format("(Name: {0}, Health: {1}, Power Level: {2}, Weapon: {3})", name, health, powerLevel, weapon.ToString());

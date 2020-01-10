@@ -9,7 +9,7 @@ namespace ProjectOne
     class Dinosaur
     {
         public string type { get; private set; }
-        double health;
+        public double health { get; private set; }
         double energy;
         public double attackPower;
         public List<AttackType> attacks { get; private set; } 
@@ -102,9 +102,12 @@ namespace ProjectOne
         }
 
 
-        public double Health()
+        public void RegenHealth()
         {
-            return health;
+            if(health > 0)
+            {
+                health += 3;
+            }
         }
 
         public string DisplayStatus()

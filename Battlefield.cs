@@ -97,5 +97,18 @@ namespace ProjectOne
                 Console.WriteLine("Winner winner chicken dinner!!!\nTeam Robot is victorious!!!");
             }
         }
+
+        public void HealRemainingCompetitors(Herd herd, Fleet fleet)
+        {
+            foreach(Dinosaur dino in herd.dinosaurs)
+            {
+                dino.RegenHealth();
+            }
+            foreach(Robot robot in fleet.robots)
+            {
+                robot.RegenHealth();
+            }
+
+        }
     }
 }
