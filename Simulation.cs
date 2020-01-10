@@ -28,13 +28,15 @@ namespace ProjectOne
             foreach(Robot robot in robots.robots)
             {
                 robot.UpdateWeapon(robot.SelectWeapon(weaponList));
+                //robot.UpdateWeapon(AutomateWeaponSelection(8));
+
             }
 
             initAttacks();
 
-            Dinosaur dino1 = new Dinosaur("Trex", 900, 250, 100, attacks);
-            Dinosaur dino2 = new Dinosaur("Brontosaurus", 1200, 150, 50, attacks);
-            Dinosaur dino3 = new Dinosaur("Spinosaurus", 700, 350, 125, attacks);
+            Dinosaur dino1 = new Dinosaur("Trex", 900, 300, 85, attacks);
+            Dinosaur dino2 = new Dinosaur("Brontosaurus", 1200, 200, 55, attacks);
+            Dinosaur dino3 = new Dinosaur("Spinosaurus", 700, 350, 115, attacks);
 
             dinosaurs = new Herd(new List<Dinosaur> { dino1, dino2, dino3 });
 
@@ -105,7 +107,7 @@ namespace ProjectOne
                 {
                     Console.WriteLine(matchup.Item1.DisplayStatus());
                     //attack = matchup.Item1.SelectAttack();
-                    attack = AutomateRobotAttacks(matchup.Item1);
+                    attack = AutomateDinosaurAttacks(matchup.Item1);
                     successfulAttack = matchup.Item1.Attack(matchup.Item2, attack);
                     if (successfulAttack == true)
                     {
@@ -141,9 +143,14 @@ namespace ProjectOne
 
             battlefield.HealRemainingCompetitors(dinosaurs, robots);
         }
-        public AttackType AutomateRobotAttacks(Dinosaur dino)
+        public AttackType AutomateDinosaurAttacks(Dinosaur dino)
         {
             return dino.attacks[battlefield.RandomNumber(3)];
+        }
+
+        public Weapon AutomateWeaponSelection(int range)
+        {
+            return weaponList.weapons[new Battlefield(dinosaurs, robots).RandomNumber(range)];
         }
 
     }
