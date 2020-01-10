@@ -27,8 +27,8 @@ namespace ProjectOne
 
             foreach(Robot robot in robots.robots)
             {
-                robot.UpdateWeapon(robot.SelectWeapon(weaponList));
-                //robot.UpdateWeapon(AutomateWeaponSelection(8));
+                //robot.UpdateWeapon(robot.SelectWeapon(weaponList));
+                robot.UpdateWeapon(AutomateWeaponSelection(8));
 
             }
 
@@ -46,7 +46,7 @@ namespace ProjectOne
 
         public void initAttacks()
         {
-            AttackType one = new AttackType("Tail Whip", 0.95, 0.8);
+            AttackType one = new AttackType("Tail Whip", 0.95, 0.9);
             AttackType two = new AttackType("Swipe", 1.2, 1.2);
             AttackType three = new AttackType("Stomp", 1.5, 2);
             attacks = new List<AttackType>{ one, two, three };
@@ -58,10 +58,10 @@ namespace ProjectOne
             Weapon weapon2 = new Weapon("Crossbow", 50, 0.6);
             Weapon weapon3 = new Weapon("M4A4", 100, 1.25);
             Weapon weapon4 = new Weapon("Slingshot", 25, 0.25);
-            Weapon weapon5 = new Weapon("Sniper Rifle", 150, 1.5);
-            Weapon weapon6 = new Weapon("Rocket Launcher", 200, 2);
+            Weapon weapon5 = new Weapon("Sniper Rifle", 150, 1.75);
+            Weapon weapon6 = new Weapon("Rocket Launcher", 200, 2.5);
             Weapon weapon7 = new Weapon("Rifle", 85, 1);
-            Weapon weapon8 = new Weapon("Shotgun", 175, 1.75);
+            Weapon weapon8 = new Weapon("Shotgun", 175, 2);
 
             weaponList = new WeaponList (new List<Weapon> { weapon1, weapon2, weapon3, weapon4, weapon5, weapon6, weapon7, weapon8 });
 
@@ -72,9 +72,9 @@ namespace ProjectOne
             init();
 
             while(battlefield.BattleIsActive() == true)
-            
             {
                 SimulateBattleRound();
+                //SimulateWithChoice();
                 Console.WriteLine();
                 //Thread.Sleep(250);
             }
@@ -139,9 +139,53 @@ namespace ProjectOne
 
                 }
             }
-
+            //Console.ReadLine();
+            //Console.Clear();
             battlefield.HealRemainingCompetitors(dinosaurs, robots);
         }
+        public void SimulateWithChoice()
+        {
+            bool successfulAttack;
+            bool hitchance = battlefield.HitChance();
+
+            Robot dinoTarget;
+            Dinosaur roboTarget;
+            AttackType attack;
+
+
+            foreach (Dinosaur dino in dinosaurs.dinosaurs)
+            {
+                dinoTarget = battlefield.ChooseRobot(dino, robots);
+                attack = dino.SelectAttack();
+
+                successfulAttack = dino.Attack(dinoTarget,attack);
+                if(successfulAttack == true)
+                {                   
+                   Console.WriteLine($"{dino.type} hit {dinoTarget.name} for {dino.attackPower * attack.attackMultiplier} points of damage!");
+                   Console.WriteLine($"{dinoTarget.name} now has {dinoTarget.health} health points left!");
+
+                }
+                Console.WriteLine(dino.DisplayStatus());
+
+            }
+            foreach (Robot robo in robots.robots)
+            {
+                roboTarget = battlefield.ChooseDinosaur(robo, dinosaurs);
+                robo.Attack(roboTarget);
+
+                successfulAttack = robo.Attack(roboTarget);
+                if (successfulAttack == true)
+                {
+                    Console.WriteLine($"{robo.name} hit {roboTarget.type} for {robo.weapon.attackPower} points of damage!");
+                    Console.WriteLine($"{roboTarget.type} now has {roboTarget.health} health points left!");
+
+                }
+                Console.WriteLine(robo.DisplayStatus());
+            }
+
+        }
+                              
+
         public AttackType AutomateDinosaurAttacks(Dinosaur dino)
         {
             return dino.attacks[battlefield.RandomNumber(3)];

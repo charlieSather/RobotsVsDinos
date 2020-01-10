@@ -52,7 +52,7 @@ namespace ProjectOne
                 }
                 else
                 {
-                    dinoIndex  = RandomNumber(herd.dinosaurs.Count); ;
+                    dinoIndex  = RandomNumber(herd.dinosaurs.Count);
                 }
             }
 
@@ -64,7 +64,7 @@ namespace ProjectOne
                 }
                 else
                 {
-                    roboIndex = RandomNumber(fleet.robots.Count); ;
+                    roboIndex = RandomNumber(fleet.robots.Count);
                 }
             }
             return (dinosaur, robot);
@@ -96,6 +96,73 @@ namespace ProjectOne
             {
                 Console.WriteLine("Winner winner chicken dinner!!!\nTeam Robot is victorious!!!");
             }
+        }
+        public Robot ChooseRobot(Dinosaur dino, Fleet fleet)
+        {
+            Console.WriteLine($"{dino.type} choose your target (enter robot name)");
+            foreach(Robot robot in fleet.robots)
+            {
+                if(robot.IsAlive() == true)
+                {
+                    Console.WriteLine(robot.name);
+                }
+            }
+
+            bool validInput = false;
+            string input;
+
+            Robot target = null;
+
+            while(validInput == false)
+            {
+                input = Console.ReadLine();
+                foreach(Robot robot in fleet.robots)
+                {
+                    if(robot.name == input && robot.health > 0)
+                    {
+                        validInput = true;
+                        return robot;
+                        //target = robot;                        
+                        //break;
+                    }
+                }
+                Console.WriteLine("Oops we're having trouble finding the robot you want to destroy");
+            }
+            return target;      
+
+        }
+        public Dinosaur ChooseDinosaur(Robot robot, Herd herd)
+        {
+            Console.WriteLine($"{robot.name} choose your target (enter dinosaur name)");
+            foreach (Dinosaur dino in herd.dinosaurs)
+            {
+                if (dino.IsAlive() == true)
+                {
+                    Console.WriteLine(dino.type);
+                }
+            }
+
+            bool validInput = false;
+            string input;
+
+            Dinosaur target = null;
+
+            while (validInput == false)
+            {
+                input = Console.ReadLine();
+                foreach (Dinosaur dino in herd.dinosaurs)
+                {
+                    if (dino.type == input && dino.health > 0)
+                    {
+                        validInput = true;
+                        return dino;
+                        //target = dino;
+                        //break;
+                    }                    
+                }
+                Console.WriteLine("Oops we're having trouble finding the dinosaur you're trying to destroy");
+            }
+            return target;
         }
 
         public void HealRemainingCompetitors(Herd herd, Fleet fleet)
