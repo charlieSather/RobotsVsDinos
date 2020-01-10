@@ -105,22 +105,25 @@ namespace ProjectOne
                 {
                     Console.WriteLine(matchup.Item1.DisplayStatus());
                     attack = matchup.Item1.SelectAttack();
+                    //attack = AutomateRobotAttacks(matchup.Item1);
                     successfulAttack = matchup.Item1.Attack(matchup.Item2, attack);
                     if (successfulAttack == true)
                     {
                         Console.WriteLine($"{matchup.Item1.type} hit {matchup.Item2.name} for {matchup.Item1.attackPower * attack.attackMultiplier} points of damage!");
                         Console.WriteLine($"{matchup.Item2.name} now has {matchup.Item2.Health()} health points left!");
                     }
-                    
+                    Console.WriteLine(matchup.Item1.DisplayStatus());
                 }
                 else
                 {
+                    Console.WriteLine(matchup.Item2.DisplayStatus());
                     successfulAttack = matchup.Item2.Attack(matchup.Item1);
                     if (successfulAttack == true)
                     {
                         Console.WriteLine($"{matchup.Item2.name} hit {matchup.Item1.type} for {matchup.Item2.weapon.attackPower} points of damage!");
                         Console.WriteLine($"{matchup.Item1.type} now has {matchup.Item1.Health()} health points left!");
-                    }                  
+                    }
+                    Console.WriteLine(matchup.Item2.DisplayStatus());
                 }
             }
             else
@@ -134,9 +137,11 @@ namespace ProjectOne
                     Console.WriteLine($"{matchup.Item2.name} missed {matchup.Item1.type}!!!");
 
                 }
-            }
-
-           
+            }           
+        }
+        public AttackType AutomateRobotAttacks(Dinosaur dino)
+        {
+            return dino.attacks[battlefield.RandomNumber(3)];
         }
 
     }

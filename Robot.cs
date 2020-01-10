@@ -102,7 +102,7 @@ namespace ProjectOne
 
         public string DisplayStatus()
         {
-            return string.Format("Name: {0}, Health: {1}, Power Level: {2}, Weapon: {3}", name, health, powerLevel, weapon.type);
+            return string.Format("(Name: {0}, Health: {1}, Power Level: {2}, Weapon: {3})", name, health, powerLevel, weapon.ToString());
         }
 
     }

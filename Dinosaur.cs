@@ -12,7 +12,7 @@ namespace ProjectOne
         double health;
         double energy;
         public double attackPower;
-        List<AttackType> attacks; 
+        public List<AttackType> attacks { get; private set; } 
 
         public Dinosaur(string type, double health, double energy, double attackPower, List<AttackType> attacks)
         {
