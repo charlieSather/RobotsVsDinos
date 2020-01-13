@@ -17,7 +17,7 @@ namespace ProjectOne
 
         public void init()
         {
-            initWeapons();
+            weaponList = new WeaponList();
 
             Robot robo1 = new Robot("Calvin", 1200, 300, new Weapon());
             Robot robo2 = new Robot("Steve", 1200, 375, new Weapon());
@@ -25,12 +25,13 @@ namespace ProjectOne
 
             robots = new Fleet(new List<Robot>{ robo1, robo2, robo3});
 
-            foreach(Robot robot in robots.robots)
+           foreach(Robot robot in robots.robots)
             {
-                //robot.UpdateWeapon(robot.SelectWeapon(weaponList));
-                robot.UpdateWeapon(AutomateWeaponSelection(8));
+                robot.UpdateWeapon(robot.SelectWeapon(weaponList));
+                //robot.UpdateWeapon(AutomateWeaponSelection(8));
 
             }
+           // PromptRobotCHoiceOrRandom();
 
             initAttacks();
 
@@ -50,21 +51,6 @@ namespace ProjectOne
             AttackType two = new AttackType("Swipe", 1.2, 1.2);
             AttackType three = new AttackType("Stomp", 1.5, 2);
             attacks = new List<AttackType>{ one, two, three };
-        }
-
-        public void initWeapons()
-        {
-            Weapon weapon1 = new Weapon("Pistol", 65, 0.75);
-            Weapon weapon2 = new Weapon("Crossbow", 50, 0.6);
-            Weapon weapon3 = new Weapon("M4A4", 100, 1.25);
-            Weapon weapon4 = new Weapon("Slingshot", 25, 0.25);
-            Weapon weapon5 = new Weapon("Sniper Rifle", 150, 1.75);
-            Weapon weapon6 = new Weapon("Rocket Launcher", 200, 2.5);
-            Weapon weapon7 = new Weapon("Rifle", 85, 1);
-            Weapon weapon8 = new Weapon("Shotgun", 175, 2);
-
-            weaponList = new WeaponList (new List<Weapon> { weapon1, weapon2, weapon3, weapon4, weapon5, weapon6, weapon7, weapon8 });
-
         }
 
         public void Run()
@@ -105,8 +91,8 @@ namespace ProjectOne
                 if (Attacker == 0)
                 {
                     Console.WriteLine(matchup.Item1.DisplayStatus());
-                    //attack = matchup.Item1.SelectAttack();
-                    attack = AutomateDinosaurAttacks(matchup.Item1);
+                    attack = matchup.Item1.SelectAttack();
+                   // attack = AutomateDinosaurAttacks(matchup.Item1);
                     successfulAttack = matchup.Item1.Attack(matchup.Item2, attack);
                     if (successfulAttack == true)
                     {
@@ -182,6 +168,45 @@ namespace ProjectOne
                 }
                 Console.WriteLine(robo.DisplayStatus());
             }
+
+        }
+
+        public void PromptRobotCHoiceOrRandom()
+        {
+            Console.WriteLine("Do you wish to let robots choose a weapon(yes or no)");
+            string input;
+            bool ValidInput = false;
+
+            while(ValidInput == false)
+            {
+                input = Console.ReadLine();
+                if(input.ToLower() == "yes")
+                {
+                    ValidInput = true;
+                    foreach (Robot robot in robots.robots)
+                    {
+                        robot.UpdateWeapon(robot.SelectWeapon(weaponList));
+
+                    }
+                }
+                else if(input.ToLower() == "no")
+                {
+                    ValidInput = true;
+                    foreach (Robot robot in robots.robots)
+                    {
+                        robot.UpdateWeapon(AutomateWeaponSelection(weaponList.weapons.Count));
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input! Please try again!");
+                }
+            }
+
+
+        }
+        public void PromptDinosaurAttacks()
+        {
 
         }
                               
